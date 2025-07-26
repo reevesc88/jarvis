@@ -2,7 +2,7 @@ const Formatter = require("ansi-to-html");
 
 function configAnalyser(configs) {
   const hasPerformanceBudget =
-    !config.performance || Object.keys(configs.performance).length < 1;
+    !configs.performance || Object.keys(configs.performance).length < 1;
 
   return { performance: hasPerformanceBudget };
 }
@@ -10,7 +10,11 @@ function configAnalyser(configs) {
 function _formattedError(errors = []) {
   const newFormat = { newline: true, escapeXML: true };
   const formatter = new Formatter(newFormat);
-  return errors.map(error => formatter.toHtml(error));
+  return errors.map(error => {
+    // Ensure error is a string
+    const errorString = typeof error === 'string' ? error : String(error);
+    return formatter.toHtml(errorString);
+  });
 }
 
 const successFooter = `<div class="stats-success-footer">

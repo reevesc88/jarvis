@@ -1,26 +1,21 @@
-const browsers = require("./browsers");
+const browsers = require("./browsers.json");
 
 module.exports = {
   babelrc: false,
   presets: [
     [
-      "babel-preset-env",
+      "@babel/preset-env",
       {
         loose: true,
-        uglify: true,
-        modules: false, 
-        targets: { browsers },
-        exclude: [
-          "transform-regenerator",
-          "transform-es2015-typeof-symbol"
-        ]
+        modules: false,
+        targets: browsers
       }
-    ],
-    "stage-0"
+    ]
   ],
   plugins: [
-    "babel-plugin-transform-object-assign",
-    "babel-plugin-transform-decorators-legacy",
-    ["babel-plugin-transform-react-jsx", { pragma: "h" }]
+    "@babel/plugin-transform-object-assign",
+    ["@babel/plugin-proposal-decorators", { legacy: true }],
+    ["@babel/plugin-transform-react-jsx", { pragma: "h" }],
+    "@babel/plugin-transform-react-constant-elements"
   ]
 };

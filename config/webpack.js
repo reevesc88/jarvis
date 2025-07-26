@@ -1,13 +1,14 @@
 const { join } = require("path");
 const webpack = require("webpack");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
 const Jarvis = require("../src/server");
 const pkg = require("../package.json");
 
 const babel = require("./babel");
 const styles = require("./style");
-const uglify = require("./uglify");
+const uglify = require("./uglify.json");
 
 const dist = join(__dirname, "../dist");
 
@@ -32,10 +33,8 @@ module.exports = env => {
   if (isProd) {
     babel.plugins.push("babel-plugin-transform-react-remove-prop-types");
     plugins.push(
-      new webpack.optimize.UglifyJsPlugin(uglify),
-      new ExtractTextPlugin({
-        filename: "style.css",
-        allChunks: false
+      new MiniCssExtractPlugin({
+        filename: "style.css"
       })
     );
   } else {
@@ -47,12 +46,12 @@ module.exports = env => {
     // Add dev-only plugins
     plugins.push(
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoEmitOnErrorsPlugin(),
       new Jarvis()
     );
   }
 
   return {
+    mode: isProd ? "production" : "development",
     entry,
     output: {
       path: dist,
@@ -62,16 +61,25 @@ module.exports = env => {
     resolve: {
       extensions: [".jsx", ".js", ".json", ".scss"],
       alias: {
-        react: "preact-compat",
-        "react-dom": "preact-compat"
+        react: "preact/compat",
+        "react-dom": "preact/compat"
       }
     },
     plugins,
-    devtool: !isProd && "eval",
+    devtool: !isProd && "eval-source-map",
+    optimization: isProd ? {
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: uglify
+        })
+      ]
+    } : {},
     module: {
       rules: [
         {
           test: /\.jsx?$/,
+          include: join(__dirname, "../src"),
           use: {
             loader: "babel-loader",
             options: babel
@@ -80,26 +88,19 @@ module.exports = env => {
         {
           test: /(\.css|\.scss)$/,
           use: isProd
-            ? ExtractTextPlugin.extract({
-                fallback: "style-loader",
-                use: cssGroup
-              })
+            ? [MiniCssExtractPlugin.loader, ...cssGroup.slice(1)]
             : cssGroup
         },
         {
-          test: /\.json$/,
-          use: "json-loader"
-        },
-        {
           test: /\.(xml|html|txt|md)$/,
-          use: "raw-loader"
+          type: "asset/source"
         },
         {
           test: /\.ico$/,
-          use: "url-loader"
+          type: "asset/inline"
         },
         {
-          test: /\.svg/,
+          test: /\.svg$/,
           use: {
             loader: "svg-url-loader",
             options: {}

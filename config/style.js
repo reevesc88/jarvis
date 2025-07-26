@@ -1,13 +1,15 @@
-const browsers = require("./browsers");
+const browsers = require("./browsers.json");
 
 module.exports = isProd => {
   // assume dev/HMR values initially
-  let css={ minimize:isProd }, arr=[{ loader:'style-loader' }];
+  let css={ sourceMap: true }, arr=[{ loader:'style-loader' }];
 
   if (isProd) {
     arr = [];
-    css.localIdentName = "[local]";
-    css.modules = css.sourceMap = css.importLoaders = true;
+    css.modules = {
+      localIdentName: "[local]"
+    };
+    css.importLoaders = 2;
   }
 
   return arr.concat(
@@ -17,10 +19,12 @@ module.exports = isProd => {
     }, {
       loader: "postcss-loader",
       options: {
-        sourceMap: "inline",
-        plugins: [
-          require("autoprefixer")({ browsers })
-        ]
+        sourceMap: true,
+        postcssOptions: {
+          plugins: [
+            require("autoprefixer")()
+          ]
+        }
       }
     }, {
       loader: "sass-loader",

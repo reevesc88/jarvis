@@ -50,3 +50,7 @@ typings/
 
 # Output of 'npm pack'
 *.tgz
+
+
+#Ignore vscode AI rules
+.github\copilot-instructions.md

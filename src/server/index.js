@@ -67,7 +67,7 @@ class Jarvis {
     if (definePlugin) {
       const pluginNodeEnv = definePlugin["definitions"]["process.env.NODE_ENV"];
       if (pluginNodeEnv === "production") {
-        this.env.clientEnv === "production";
+        this.env.clientEnv = "production";
       }
     }
 
@@ -100,7 +100,7 @@ class Jarvis {
       bootJarvis();
     }
 
-    compiler.plugin("watch-run", (c, done) => {
+    compiler.hooks.watchRun.tapAsync("JarvisPlugin", (compiler, done) => {
       if (this.options.watchOnly) {
         bootJarvis();
       }
@@ -108,23 +108,21 @@ class Jarvis {
       done();
     });
 
-    compiler.plugin("run", (c, done) => {
+    compiler.hooks.run.tapAsync("JarvisPlugin", (compiler, done) => {
       this.env.watching = false;
       done();
     });
 
     // report the webpack compiler progress
-    compiler.apply(
-      new webpack.ProgressPlugin((percentage, message) => {
-        this.reports.progress = { percentage, message };
-        if (this.env.running) {
-          jarvis.io.emit("progress", { percentage, message });
-        }
-      })
-    );
+    new webpack.ProgressPlugin((percentage, message) => {
+      this.reports.progress = { percentage, message };
+      if (this.env.running) {
+        jarvis.io.emit("progress", { percentage, message });
+      }
+    }).apply(compiler);
 
     // extract the final reports from the stats!
-    compiler.plugin("done", stats => {
+    compiler.hooks.done.tap("JarvisPlugin", stats => {
       if (!this.env.running) return;
 
       const jsonStats = stats.toJson({ chunkModules: true });
