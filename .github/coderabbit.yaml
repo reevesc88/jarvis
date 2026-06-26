@@ -1,0 +1,15 @@
+language: "en-US"
+tone_instructions: "Be concise. Flag correctness issues and security problems. Skip style nitpicks."
+reviews:
+  profile: "chill"
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches: ["master"]
+  path_filters:
+    - "!*.lock"
+    - "!node_modules/**"
+    - "!dist/**"
+    - "!build/**"
+chat:
+  auto_reply: true
