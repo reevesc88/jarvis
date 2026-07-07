@@ -1,0 +1,319 @@
+# Instincts generated from https://github.com/reevesc88/jarvis
+# Generated: 2026-07-07T16:22:38.789Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: jarvis-commit-conventional
+trigger: "when writing a commit message"
+confidence: 0.85
+domain: git
+source: repo-analysis
+source_repo: https://github.com/reevesc88/jarvis
+---
+
+# Jarvis Commit Conventional
+
+## Action
+
+Use conventional commit format with prefixes: feat
+
+## Evidence
+
+- 1 commits analyzed
+- Detected conventional commit pattern
+- Examples: feat: wire CodeRabbit + Copilot review bots (v3, github-script v9, job-level permissions)
+
+---
+id: jarvis-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/reevesc88/jarvis
+---
+
+# Jarvis Commit Length
+
+## Action
+
+Write moderate-length commit messages (~89 characters)
+
+## Evidence
+
+- Average commit message length: 89 chars
+- Based on 1 commits
+
+---
+id: jarvis-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/reevesc88/jarvis
+---
+
+# Jarvis Naming Files
+
+## Action
+
+Use kebab-case naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: kebab-case
+
+---
+id: jarvis-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/reevesc88/jarvis
+---
+
+# Jarvis Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: jarvis-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/reevesc88/jarvis
+---
+
+# Jarvis Export Style
+
+## Action
+
+Prefer named exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: named
+
+---
+id: jarvis-test-separate
+trigger: "when writing tests"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/reevesc88/jarvis
+---
+
+# Jarvis Test Separate
+
+## Action
+
+Place tests in the tests/ or __tests__/ directory, mirroring src structure
+
+## Evidence
+
+- Separate test directory pattern detected
+- Tests live in dedicated test folders
+
+---
+id: jarvis-instinct-file-naming
+trigger: "When creating a new file"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: reevesc88/jarvis
+---
+
+# Jarvis Instinct File Naming
+
+## Action
+
+Name the file using kebab-case
+
+## Evidence
+
+- Pattern in namingConventions.files
+
+---
+id: jarvis-instinct-function-naming
+trigger: "When defining a new function"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: reevesc88/jarvis
+---
+
+# Jarvis Instinct Function Naming
+
+## Action
+
+Name the function using camelCase
+
+## Evidence
+
+- Pattern in namingConventions.functions
+
+---
+id: jarvis-instinct-class-naming
+trigger: "When defining a new class"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: reevesc88/jarvis
+---
+
+# Jarvis Instinct Class Naming
+
+## Action
+
+Name the class using PascalCase
+
+## Evidence
+
+- Pattern in namingConventions.classes
+
+---
+id: jarvis-instinct-constant-naming
+trigger: "When declaring a constant"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: reevesc88/jarvis
+---
+
+# Jarvis Instinct Constant Naming
+
+## Action
+
+Name the constant using SCREAMING_SNAKE_CASE
+
+## Evidence
+
+- Pattern in namingConventions.constants
+
+---
+id: jarvis-instinct-import-style
+trigger: "When importing modules"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: reevesc88/jarvis
+---
+
+# Jarvis Instinct Import Style
+
+## Action
+
+Use relative import paths
+
+## Evidence
+
+- Pattern in importStyle
+
+---
+id: jarvis-instinct-export-style
+trigger: "When exporting modules or functions"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: reevesc88/jarvis
+---
+
+# Jarvis Instinct Export Style
+
+## Action
+
+Use named exports
+
+## Evidence
+
+- Pattern in exportStyle
+
+---
+id: jarvis-instinct-commit-format
+trigger: "When writing a commit message"
+confidence: 0.9
+domain: git
+source: repo-analysis
+source_repo: reevesc88/jarvis
+---
+
+# Jarvis Instinct Commit Format
+
+## Action
+
+Use the conventional commit format with 'feat' prefix for new features
+
+## Evidence
+
+- Seen in commit: feat: wire CodeRabbit + Copilot review bots (v3, github-script v9, job-level permissions)
+- Pattern in commits.prefixes
+
+---
+id: jarvis-instinct-commit-length
+trigger: "When writing a commit message"
+confidence: 0.7
+domain: git
+source: repo-analysis
+source_repo: reevesc88/jarvis
+---
+
+# Jarvis Instinct Commit Length
+
+## Action
+
+Keep the commit message concise, around 89 characters on average
+
+## Evidence
+
+- Pattern in commits.averageLength
+
+---
+id: jarvis-instinct-test-location
+trigger: "When adding new tests"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: reevesc88/jarvis
+---
+
+# Jarvis Instinct Test Location
+
+## Action
+
+Place tests in a separate folder from source code
+
+## Evidence
+
+- Pattern in architecture.folderStructure.testLocation
+
+---
+id: jarvis-instinct-github-workflow-location
+trigger: "When adding CI/CD or automation workflows"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: reevesc88/jarvis
+---
+
+# Jarvis Instinct Github Workflow Location
+
+## Action
+
+Place workflow configuration files in the .github/workflows directory
+
+## Evidence
+
+- Pattern in architecture.commonFolders
+- Pattern in architecture.configFiles
+
