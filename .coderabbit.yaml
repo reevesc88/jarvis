@@ -1,5 +1,5 @@
 language: "en-US"
-tone_instructions: "Be concise and direct. Skip style nitpicks."
+tone_instructions: "Be concise and direct."
 reviews:
   profile: "assertive"
   auto_review:
@@ -10,21 +10,28 @@ reviews:
       - master
   path_instructions:
     - path: "**"
-      instructions: "Flag security issues: API keys, hardcoded credentials, missing .gitignore. Flag data loss risks."
+      instructions: "Flag security issues: API keys, hardcoded credentials. Flag data loss risks."
     - path: "**/migrations/**"
       instructions: "D1 migrations must be additive — no DROP or destructive ALTER."
   path_filters:
+    - "!**/*.lock"
     - "!**/pnpm-lock.yaml"
     - "!**/package-lock.json"
-    - "!**/yarn.lock"
     - "!**/venv/**"
+    - "!**/.venv/**"
     - "!**/node_modules/**"
     - "!**/frameworks/**"
     - "!**/dist/**"
     - "!**/build/**"
+    - "!**/__pycache__/**"
+    - "!**/*.pyc"
   review_status: true
   poem: false
   collapse_walkthrough: false
+  sequence_diagrams: false
+  finishing_touches:
+    docstrings:
+      enabled: false
 chat:
   auto_reply: true
 knowledge_base:
